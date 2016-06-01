@@ -1,7 +1,4 @@
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.function.*;
-import java.util.function.*;
 
 /**
  * Created by wz on 16/5/25.
@@ -17,7 +14,7 @@ public class CalculatorModel {
     private HashMap<String,BinaryOperation> binaryOperators  = new HashMap<String,BinaryOperation>();
     private HashMap<String,UnaryOperation> unaryOperators  = new HashMap<String,UnaryOperation>();
     private HashMap<String,Constant> constants  = new HashMap<String,Constant>();
-    void initOperators(){
+    private void initOperators(){
         binaryOperators.put("+",(op1, op2) -> op1+op2);
         binaryOperators.put("-",(op1, op2) -> op1-op2);
         binaryOperators.put("x",(op1, op2) -> op1*op2);
@@ -25,6 +22,13 @@ public class CalculatorModel {
 
         unaryOperators.put("%",op1 -> op1/100.0);
         unaryOperators.put("+/-",op1 -> -op1);
+    }
+    public void clearAll(){
+        binaryOperationNotComplete = false;
+        lastBinaryOperation = null;
+        notCompleteBinaryOperation = null;
+        tappedNewNumber = true;
+        accumulator = 0.0;
     }
     public void setOperand(Double operand){
         accumulator = operand;

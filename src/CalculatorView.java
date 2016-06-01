@@ -52,12 +52,16 @@ public class CalculatorView {
             button.setSize(30,30);
             button.setText(title);
             button.setFont(new Font("Arial",Font.ITALIC,24));
-            if ( title.compareTo("9")<=0 && title.compareTo("0")>=0){
+            if ( (title.compareTo("9")<=0 && title.compareTo("0")>=0)||title.equals(".")){
                 //Java8 Lambda
                 button.addActionListener(event -> {
                     controller.touchDigit(title);
                 });
-            }else{
+            }else if(title.equals("AC")){
+                button.addActionListener(envet ->{
+                    controller.tappedAC();
+                });
+            } else{
                 button.addActionListener(event -> {
                     controller.performOperation(title);
                 });

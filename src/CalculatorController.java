@@ -16,10 +16,15 @@ public class CalculatorController {
     }
 
     public void touchDigit(String title){
-        if (userIsInTheMiddleOfTyping) view.setDisplay(view.getDisplay() + title);
+        if (title.equals(".")){
+            userIsInTheMiddleOfTyping = true;
+            if ((view.getDisplay().indexOf(".")==-1)) view.setDisplay(view.getDisplay() + title);
+            return;
+        }
+        else if (userIsInTheMiddleOfTyping) view.setDisplay(view.getDisplay() + title);
         else view.setDisplay(title);
         if (!(Stream.of(view.getDisplay()).filter(ch -> ch!="0").count()==0)) userIsInTheMiddleOfTyping = true;
-        System.out.print("touchDigit\n");
+        System.out.print("touchedDigit\n");
     }
     public void performOperation(String symbol){
         if (userIsInTheMiddleOfTyping){
@@ -30,32 +35,10 @@ public class CalculatorController {
         view.setDisplay(String.format("%f",model.accumulator));
         System.out.print("performOperation\n");
     }
+
+    public void tappedAC(){
+        userIsInTheMiddleOfTyping = false;
+        model.clearAll();
+        view.setDisplay(String.format("%f",model.accumulator));
+    }
 }
-
-
-
-//使用Lambda
-//class KeyBoardDigitAction implements ActionListener{
-//    private CalculatorController controller;
-//    private String title;
-//    public KeyBoardDigitAction(CalculatorController controller, String title){
-//        this.controller = controller;
-//        this.title = title;
-//    }
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        controller.touchDigit(title);
-//    }
-//}
-//class KeyBoardOperationAction implements ActionListener{
-//    private CalculatorController controller;
-//    private String title;
-//    public KeyBoardOperationAction(CalculatorController controller,String title){
-//        this.controller = controller;
-//        this.title = title;
-//    }
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        controller.performOperation(title);
-//    }
-//}
